@@ -16,5 +16,5 @@ Decrypt:
 
 Enter password when prompted.
 ```
-gpg -d text.txt.gpg
+gpg -o text.txt -d text.txt.gpg
 ```
