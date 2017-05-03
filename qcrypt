@@ -26,6 +26,6 @@ if [[ -f $FILE ]]; then
     	echo "$FILE encrypted with $PASSPHRASE"
     fi
 else
-    echo "Usage: ezcrypt filename"
+    echo "Usage: qcrypt filename"
 fi
 
