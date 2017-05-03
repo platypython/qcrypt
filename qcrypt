@@ -1,0 +1,31 @@
+#!/bin/bash
+# ------------------------------------------------------------------
+# [Derrick] qcrypt
+#           encrypt files with a random password easily with
+#           gpg.
+# ------------------------------------------------------------------
+#VERSION=0.1.0
+
+echoerr() { echo "$@" 1>&2; }
+
+FILE=$1
+
+gpg_path=$(which gpg)
+if ! [[ -f "$gpg_path" ]] ; then
+    echoerr "Error: dependency 'gpg' not found in system path."
+    exit 1
+fi
+
+if [[ -f $FILE ]]; then
+    PASSPHRASE=$(dd if=/dev/urandom bs=16 count=1 status=none | base64)
+    echo $PASSPHRASE | gpg --batch --passphrase-fd 0 -c $1
+    if [[ $? != 0 ]]; then
+    	echoerr "Unable to encrypt file"
+    	exit 1
+    else
+    	echo "$FILE encrypted with $PASSPHRASE"
+    fi
+else
+    echo "Usage: ezcrypt filename"
+fi
+
